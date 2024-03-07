@@ -89,6 +89,7 @@ const formularioInstance = new Formulario();
 //     return tr;
 // }
 function createProductRow(product, index) {
+    console.log("entrou aqui no createproductrow")
     const tr = document.createElement('tr');
     tr.className = 'container-mt-5';
     
@@ -145,28 +146,41 @@ function createProductRow(product, index) {
     containerDiv.className = 'container mt-3';
     
     const unitMeasureColumn = document.createElement('td');
-    unitMeasureColumn.className = 'col-md-2';
-    const unitMeasureLabel = document.createElement('label');
-    unitMeasureLabel.htmlFor = 'unidade';
-    unitMeasureLabel.className = 'form-label';
-    unitMeasureLabel.textContent = 'UND. Medida';
-    const unitMeasureSelect = document.createElement('select');
-    unitMeasureSelect.className = 'form-control';
-    unitMeasureSelect.name = 'unidadeMedida';
-    unitMeasureSelect.value = product.unidadeMedida;
-    unitMeasureSelect.addEventListener('change', (e) => {
-        formularioInstance.handleProductsAndDocsChange(e, index); // Call handleProductsAndDocsChange method from Formulario instance
-    });
-    unitMeasureSelect.required = true;
-    const options = ['Selecione...', 'Kg', 'g', 'L', 'mL'];
-    options.forEach(option => {
-        const optionElement = document.createElement('option');
-        optionElement.value = option.toLowerCase();
-        optionElement.textContent = option;
-        unitMeasureSelect.appendChild(optionElement);
-    });
-    unitMeasureColumn.appendChild(unitMeasureLabel);
-    unitMeasureColumn.appendChild(unitMeasureSelect);
+unitMeasureColumn.className = 'col-md-2';
+const unitMeasureLabel = document.createElement('label');
+unitMeasureLabel.htmlFor = 'unidade';
+unitMeasureLabel.className = 'form-label';
+unitMeasureLabel.textContent = 'UND. Medida';
+const unitMeasureSelect = document.createElement('select');
+unitMeasureSelect.className = 'form-control';
+unitMeasureSelect.name = 'unidadeMedida';
+unitMeasureSelect.addEventListener('change', (e) => {
+    formularioInstance.handleProductsAndDocsChange(e, index); // Call handleProductsAndDocsChange method from Formulario instance
+});
+unitMeasureSelect.required = true;
+
+// Create the "Selecione..." option
+const defaultOption = document.createElement('option');
+defaultOption.value = '';
+defaultOption.textContent = 'Selecione...';
+defaultOption.disabled = true;
+defaultOption.selected = true; // Make it the default option
+
+// Create other options
+const options = ['Kg', 'g', 'L', 'mL'];
+options.forEach(option => {
+    const optionElement = document.createElement('option');
+    optionElement.value = option.toLowerCase();
+    optionElement.textContent = option;
+    unitMeasureSelect.appendChild(optionElement);
+});
+
+// Add the default option as the first child of the select element
+unitMeasureSelect.insertBefore(defaultOption, unitMeasureSelect.firstChild);
+
+unitMeasureColumn.appendChild(unitMeasureLabel);
+unitMeasureColumn.appendChild(unitMeasureSelect);
+
     
     //Quantid. em estoque
     const stockAmountColumn = document.createElement('td');
@@ -245,8 +259,28 @@ function createProductRow(product, index) {
 }
 
 function handleAddProductAndUpdateTable() {
-    formularioInstance.handleAddProduct();
-    renderProdutosTable(formularioInstance);
+        // Get the values from input fields
+        const descricao = document.querySelector('input[name="descricao"]').value;
+        const unidadeMedida = document.querySelector('select[name="unidadeMedida"]').value;
+        const quantidadeEstoque = document.querySelector('input[name="quantidadeEstoque"]').value;
+        const valorUnitario = document.querySelector('input[name="valorUnitario"]').value;
+        const valorTotal = document.querySelector('input[name="valorTotal"]').value;
+        const unitMeasureSelect = document.querySelector('[name="unidadeMedida"]');
+    const selectedOption = unitMeasureSelect.value;
+    
+    // Check if the selected option is the placeholder "Selecione..."
+    if (selectedOption === '') {
+        alert('Por favor, selecione uma opção válida para a unidade de medida.');
+        return; // Exit the function without adding the product
+    }
+    
+        // Call the handleAddProduct method with the gathered values
+        formularioInstance.handleAddProduct(descricao, unidadeMedida, quantidadeEstoque, valorUnitario, valorTotal);
+    
+        // Re-render the produtos table
+        renderProdutosTable();
+    
+    
 }
 
 function createAddProductButton() {
@@ -285,15 +319,51 @@ function createAddProductButton() {
 //     return div;
 // }
 
+// function renderProdutosTable() {
+//     console.log(JSON.stringify(formularioInstance.formData.produtos))
+
+//     const div = document.createElement('div');
+    
+//     const h3 = document.createElement('h3');
+//     h3.textContent = 'Produtos';
+//     div.appendChild(h3);
+    
+//     const table = document.createElement('table');
+//     table.className = 'table';
+    
+//     const tbody = document.createElement('tbody');
+    
+//     formularioInstance.formData.produtos.forEach((produto, index) => {
+//         console.log(formularioInstance.formData.produtos)
+//         console.log(`Product ${index}:`, produto);
+
+//         const row = createProductRow(produto, index);
+//         tbody.appendChild(row);
+//     });
+    
+//     const addProductButton = createAddProductButton();
+    
+//     tbody.appendChild(addProductButton);
+//     table.appendChild(tbody);
+//     div.appendChild(table);
+    
+//     return div;
+// }
+
 function renderProdutosTable() {
     console.log(JSON.stringify(formularioInstance.formData.produtos))
 
-    const div = document.createElement('div');
-    
-    const h2 = document.createElement('h2');
-    h2.textContent = 'Produtos';
-    div.appendChild(h2);
-    
+    // Get the existing div container
+    const container = document.getElementById('produtos-container');
+
+    // Clear the existing content
+    container.innerHTML = '';
+
+    // Create new elements
+    const h3 = document.createElement('h3');
+    h3.textContent = 'Produtos';
+    container.appendChild(h3);
+
     const table = document.createElement('table');
     table.className = 'table';
     
@@ -301,6 +371,8 @@ function renderProdutosTable() {
     
     formularioInstance.formData.produtos.forEach((produto, index) => {
         console.log(formularioInstance.formData.produtos)
+        console.log(`Product ${index}:`, produto);
+
         const row = createProductRow(produto, index);
         tbody.appendChild(row);
     });
@@ -309,16 +381,25 @@ function renderProdutosTable() {
     
     tbody.appendChild(addProductButton);
     table.appendChild(tbody);
-    div.appendChild(table);
-    
-    return div;
+    container.appendChild(table);
 }
 
 // Get the container element in your HTML where you want to append the form
-const container = document.getElementById('form-container');
+const formContainer = document.getElementById('form-container');
+
+// Create a new container element for produtos
+const produtosContainer = document.createElement('div');
+produtosContainer.id = 'produtos-container'; // Set the id for identification
+formContainer.appendChild(produtosContainer); // Append it to the form container
+
+// Call the renderProdutosTable function and append the generated table to the produtos container
+renderProdutosTable();
+
+// Get the container element in your HTML where you want to append the form
+// const container = document.getElementById('form-container');
 
 // Call the renderProdutosTable function and append the generated table to the container
-container.appendChild(renderProdutosTable());
+// container.appendChild(renderProdutosTable());
 // Get the container element in your HTML where you want to append the form
 // const container = document.getElementById('form-container');
 

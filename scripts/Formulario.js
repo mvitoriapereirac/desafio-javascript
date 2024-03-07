@@ -252,19 +252,19 @@ class Formulario {
     }
 
     // Method to handle adding a new product
-    handleAddProduct() {
+    handleAddProduct(descricao, medida, quantidade, unidade, total) {
         const newProduct = {
-            descricao: '',
-            unidadeMedida: '',
-            quantidadeEstoque: '',
-            valorUnitario: '',
-            valorTotal: '', 
+            descricao: descricao,
+            unidadeMedida: medida,
+            quantidadeEstoque: quantidade,
+            valorUnitario: unidade,
+            valorTotal: total, 
         };
 
         this.formData.produtos.push(newProduct);
+        console.log(this.formData.produtos[-1])
 
         // Regenerate form fields
-        // this.generateFormFields();
     }
 
     // Method to handle deleting a product
@@ -272,7 +272,7 @@ class Formulario {
         this.formData.produtos.splice(index, 1);
 
         // Regenerate form fields
-        this.generateFormFields();
+        // this.generateFormFields();
     }
 
     // Method to handle changes in product and document inputs
