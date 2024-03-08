@@ -1,7 +1,17 @@
+import Formulario from '../scripts/Formulario.js'
 
 
-// Initialize formData object
-let formData = {};
+function renderForm() {
+    // Clear previous form content
+    const container = document.getElementById('fornecedor-container');
+
+    // Clear the existing content
+    console.log("render form")
+    container.innerHTML = '';
+
+    // Call the FornecedorForm function and append the generated form to the container
+    fornecedorContainer.appendChild(FornecedorForm());
+}
 
 // FornecedorForm function
 function FornecedorForm() {
@@ -9,7 +19,7 @@ function FornecedorForm() {
     const formContainer = document.createElement('div');
 
     // Form title
-    const formTitle = document.createElement('h1');
+    const formTitle = document.createElement('h3');
     formTitle.textContent = 'CADASTRO FORNECEDOR/PRODUTO';
     formContainer.appendChild(formTitle);
 
@@ -33,8 +43,9 @@ function FornecedorForm() {
     razaoSocialInput.classList.add('form-control');
     razaoSocialInput.id = 'razaoSocial';
     razaoSocialInput.name = 'razaoSocial';
-    razaoSocialInput.value = formData.razaoSocial || '';
-    razaoSocialInput.addEventListener('input', handleChange);
+    console.log("Razao rocial singleton" + Formulario.formData.razaoSocial)
+    razaoSocialInput.value = Formulario.formData.razaoSocial || '';
+    razaoSocialInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
     razaoSocialInput.required = true;
 
     // Append Razão Social input to left column
@@ -52,8 +63,8 @@ function FornecedorForm() {
     nomeFantasiaInput.classList.add('form-control');
     nomeFantasiaInput.id = 'nomeFantasia';
     nomeFantasiaInput.name = 'nomeFantasia';
-    nomeFantasiaInput.value = formData.cep || '';
-    nomeFantasiaInput.addEventListener('input', handleChange);
+    nomeFantasiaInput.value = Formulario.formData.nomeFantasia || '';
+    nomeFantasiaInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
     nomeFantasiaInput.required = true;
 
     // Append Nome Fantasia input to left column
@@ -68,8 +79,8 @@ function FornecedorForm() {
     cepInput.classList.add('form-control');
     cepInput.id = 'CEP';
     cepInput.name = 'CEP';
-    cepInput.value = formData.nomeFantasia || '';
-    cepInput.addEventListener('input', handleChange);
+    cepInput.value = Formulario.formData.cep || '';
+    cepInput.addEventListener('input', (e) => { Formulario.handleInputChange(e, renderForm) });     
     cepInput.required = true;
 
     // Append CEP input to left column
@@ -84,8 +95,8 @@ function FornecedorForm() {
     enderecoInput.classList.add('form-control');
     enderecoInput.id = 'endereco';
     enderecoInput.name = 'endereco';
-    enderecoInput.value = formData.endereco || '';
-    enderecoInput.addEventListener('input', handleChange);
+    enderecoInput.value = Formulario.formData.endereco || '';
+    enderecoInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
     enderecoInput.required = true;
 
     // Append ENDERECO input to left column
@@ -104,8 +115,8 @@ function FornecedorForm() {
     CNPJInput.classList.add('form-control');
     CNPJInput.id = 'cnpj';
     CNPJInput.name = 'cnpj';
-    CNPJInput.value = formData.cnpj || '';
-    CNPJInput.addEventListener('input', handleChange);
+    CNPJInput.value = Formulario.formData.cnpj || '';
+    CNPJInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
     CNPJInput.required = true;
 
     // Append CNPJ input to right column
@@ -120,8 +131,8 @@ function FornecedorForm() {
     inscEstadualInput.classList.add('form-control');
     inscEstadualInput.id = 'inscricaoEstadual';
     inscEstadualInput.name = 'inscricaoEstadual';
-    inscEstadualInput.value = formData.inscricaoEstadual || '';
-    inscEstadualInput.addEventListener('input', handleChange);
+    inscEstadualInput.value = Formulario.formData.inscricaoEstadual || '';
+    inscEstadualInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
     inscEstadualInput.required = false;
 
     // Append INSC EST input to right column
@@ -136,8 +147,8 @@ function FornecedorForm() {
     inscMunicipalInput.classList.add('form-control');
     inscMunicipalInput.id = 'inscricaoMunicipal';
     inscMunicipalInput.name = 'inscricaoMunicipal';
-    inscMunicipalInput.value = formData.inscricaoEstadual || '';
-    inscMunicipalInput.addEventListener('input', handleChange);
+    inscMunicipalInput.value = Formulario.formData.inscricaoEstadual || '';
+    inscMunicipalInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
     inscMunicipalInput.required = false;
 
     // Append INSC EST input to right column
@@ -152,8 +163,8 @@ function FornecedorForm() {
      numeroInput.classList.add('form-control');
      numeroInput.id = 'numero';
      numeroInput.name = 'numero';
-     numeroInput.value = formData.inscricaoEstadual || '';
-     numeroInput.addEventListener('input', handleChange);
+     numeroInput.value = Formulario.formData.numero || '';
+     numeroInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
      numeroInput.required = true;
  
      // Append INSC EST input to right column
@@ -175,8 +186,8 @@ complementoInput.type = 'text';
 complementoInput.classList.add('form-control');
 complementoInput.id = 'complemento';
 complementoInput.name = 'complemento';
-complementoInput.value = formData.complemento || '';
-complementoInput.addEventListener('input', handleChange);
+complementoInput.value = Formulario.formData.complemento || '';
+complementoInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
 complementoInput.required = true;
 
 // Append Complemento input
@@ -200,8 +211,8 @@ bairroInput.type = 'text';
 bairroInput.classList.add('form-control');
 bairroInput.id = 'bairro';
 bairroInput.name = 'bairro';
-bairroInput.value = formData.bairro || '';
-bairroInput.addEventListener('input', handleChange);
+bairroInput.value = Formulario.formData.bairro || '';
+bairroInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
 bairroInput.required = true;
 bairroDiv.appendChild(bairroLabel);
 bairroDiv.appendChild(bairroInput);
@@ -216,8 +227,8 @@ municipioInput.type = 'text';
 municipioInput.classList.add('form-control');
 municipioInput.id = 'municipio';
 municipioInput.name = 'municipio';
-municipioInput.value = formData.municipio || '';
-municipioInput.addEventListener('input', handleChange);
+municipioInput.value = Formulario.formData.municipio || '';
+municipioInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
 municipioInput.required = true;
 municipioDiv.appendChild(municipioLabel);
 municipioDiv.appendChild(municipioInput);
@@ -232,8 +243,8 @@ estadoInput.type = 'text';
 estadoInput.classList.add('form-control');
 estadoInput.id = 'estado';
 estadoInput.name = 'estado';
-estadoInput.value = formData.estado || '';
-estadoInput.addEventListener('input', handleChange);
+estadoInput.value = Formulario.formData.estado || '';
+estadoInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
 estadoInput.required = true;
 estadoDiv.appendChild(estadoLabel);
 estadoDiv.appendChild(estadoInput);
@@ -257,8 +268,8 @@ contatoInput.type = 'text';
 contatoInput.classList.add('form-control');
 contatoInput.id = 'contato';
 contatoInput.name = 'contato';
-contatoInput.value = formData.contato || '';
-contatoInput.addEventListener('input', handleChange);
+contatoInput.value = Formulario.formData.contato || '';
+contatoInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
 contatoInput.required = true;
 contatoDiv.appendChild(contatoLabel);
 contatoDiv.appendChild(contatoInput);
@@ -273,8 +284,8 @@ telefoneInput.type = 'tel';
 telefoneInput.classList.add('form-control');
 telefoneInput.id = 'telefone';
 telefoneInput.name = 'telefone';
-telefoneInput.value = formData.telefone || '';
-telefoneInput.addEventListener('input', handleChange);
+telefoneInput.value = Formulario.formData.telefone || '';
+telefoneInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
 telefoneInput.required = true;
 telefoneDiv.appendChild(telefoneLabel);
 telefoneDiv.appendChild(telefoneInput);
@@ -289,8 +300,8 @@ emailInput.type = 'email';
 emailInput.classList.add('form-control');
 emailInput.id = 'email';
 emailInput.name = 'email';
-emailInput.value = formData.email || '';
-emailInput.addEventListener('input', handleChange);
+emailInput.value = Formulario.formData.email || '';
+emailInput.addEventListener('input', (e) => { Formulario.handleInputChange(e) });     
 emailInput.required = true;
 emailDiv.appendChild(emailLabel);
 emailDiv.appendChild(emailInput);
@@ -324,14 +335,10 @@ function handleSubmit(event) {
     // Handle form submission logic here...
 }
 
-// Function to handle input change
-function handleChange(event) {
-    const { name, value } = event.target;
-    formData[name] = value;
-}
 
-// Get the container element in your HTML where you want to append the form
+
 const container = document.getElementById('form-container');
-
-// Call the FornecedorForm function and append the generated form to the container
-container.appendChild(FornecedorForm());
+const fornecedorContainer = document.createElement('div');
+fornecedorContainer.id = 'fornecedor-container'; 
+container.appendChild(fornecedorContainer);
+renderForm();

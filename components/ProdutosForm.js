@@ -1,93 +1,7 @@
 import Formulario from '../scripts/Formulario.js'
 
-const formularioInstance = new Formulario();
+const formularioInstance = Formulario;
 
-// function createProductRow(product, index) {
-//     const tr = document.createElement('tr');
-//     tr.className = 'container-mt-5';
-    
-//     const rowDiv = document.createElement('div');
-//     rowDiv.className = 'row';
-    
-//     const deleteColumn = document.createElement('div');
-//     deleteColumn.className = 'col-md-2';
-    
-//     const deleteButtonDiv = document.createElement('div');
-//     deleteButtonDiv.className = 'd-flex justify-content-center align-items-center h-100';
-    
-//     const deleteButton = document.createElement('button');
-//     deleteButton.type = 'button';
-//     deleteButton.className = 'btn btn-danger';
-//     deleteButton.textContent = 'Excluir';
-//     deleteButton.addEventListener('click', () => formularioInstance.handleDeleteProduct(index));
-    
-//     deleteButtonDiv.appendChild(deleteButton);
-//     deleteColumn.appendChild(deleteButtonDiv);
-//     rowDiv.appendChild(deleteColumn);
-    
-//     const productColumn = document.createElement('div');
-//     productColumn.className = 'col-md-10';
-    
-//     const productTd = document.createElement('td');
-//     productTd.className = 'row';
-    
-//     const productLabel = document.createElement('label');
-//     productLabel.htmlFor = 'Produto';
-//     productLabel.className = 'form-label';
-//     productLabel.textContent = `Produto - ${index + 1}`;
-    
-//     const productInput = document.createElement('input');
-//     productInput.type = 'text';
-//     productInput.className = 'form-control';
-//     productInput.name = 'descricao';
-//     productInput.value = product.descricao;
-//     productInput.addEventListener('input', (e) => formularioInstance.handleProductsAndDocsChange(e, index));
-//     productInput.required = true;
-    
-//     productTd.appendChild(productLabel);
-//     productTd.appendChild(productInput);
-    
-//     const detailsRowDiv = document.createElement('div');
-//     detailsRowDiv.className = 'row';
-//     const containerDiv = document.createElement('div');
-//     containerDiv.className = 'container mt-3';
-    
-//     const unitMeasureColumn = document.createElement('td');
-//     unitMeasureColumn.className = 'col-md-2';
-//     const unitMeasureLabel = document.createElement('label');
-//     unitMeasureLabel.htmlFor = 'unidade';
-//     unitMeasureLabel.className = 'form-label';
-//     unitMeasureLabel.textContent = 'UND. Medida';
-//     const unitMeasureSelect = document.createElement('select');
-//     unitMeasureSelect.className = 'form-control';
-//     unitMeasureSelect.name = 'unidadeMedida';
-//     unitMeasureSelect.value = product.unidadeMedida;
-//     unitMeasureSelect.addEventListener('change', (e) => formularioInstance.handleProductsAndDocsChange(e, index));
-//     unitMeasureSelect.required = true;
-//     const options = ['Selecione...', 'Kg', 'g', 'L', 'mL'];
-//     options.forEach(option => {
-//         const optionElement = document.createElement('option');
-//         optionElement.value = option.toLowerCase();
-//         optionElement.textContent = option;
-//         unitMeasureSelect.appendChild(optionElement);
-//     });
-//     unitMeasureColumn.appendChild(unitMeasureLabel);
-//     unitMeasureColumn.appendChild(unitMeasureSelect);
-    
-//     // Repeat the process for other detail columns (Quantidade em Estoque, Valor Unitário, Valor Total)
-    
-//     detailsRowDiv.appendChild(containerDiv);
-//     containerDiv.appendChild(unitMeasureColumn);
-//     // Append other detail columns here
-    
-//     productColumn.appendChild(productTd);
-//     productColumn.appendChild(detailsRowDiv);
-//     rowDiv.appendChild(productColumn);
-//     tr.appendChild(rowDiv);
-    
-//     console.log("passei aqui")
-//     return tr;
-// }
 function createProductRow(product, index) {
     console.log("entrou aqui no createproductrow")
     const tr = document.createElement('tr');
@@ -287,7 +201,7 @@ function createAddProductButton() {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'btn btn-primary col-md-12';
-    button.textContent = 'Adicionar Produto';
+    button.textContent = 'Adicionar outro Produto';
     button.addEventListener('click', handleAddProductAndUpdateTable);
     return button;
 }
@@ -368,9 +282,10 @@ function renderProdutosTable() {
     table.className = 'table';
     
     const tbody = document.createElement('tbody');
-    
-    formularioInstance.formData.produtos.forEach((produto, index) => {
-        console.log(formularioInstance.formData.produtos)
+    console.log('Formulario.formData:', Formulario.formData);
+
+    Formulario.formData.produtos.forEach((produto, index) => {
+        console.log(Formulario.formData.produtos)
         console.log(`Product ${index}:`, produto);
 
         const row = createProductRow(produto, index);
