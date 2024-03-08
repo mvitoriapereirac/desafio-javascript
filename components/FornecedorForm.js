@@ -326,13 +326,6 @@ row2Div.appendChild(emailDiv);
     return formContainer;
 }
 
-// Function to handle form submission
-function handleSubmit(event) {
-    event.preventDefault();
-    // Handle form submission logic here...
-}
-
-
 
 const container = document.getElementById('form-container');
 const fornecedorContainer = document.createElement('div');

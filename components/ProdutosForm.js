@@ -65,33 +65,97 @@ const unitMeasureLabel = document.createElement('label');
 unitMeasureLabel.htmlFor = 'unidade';
 unitMeasureLabel.className = 'form-label';
 unitMeasureLabel.textContent = 'UND. Medida';
+
+
+// const unitMeasureSelect = document.createElement('select');
+// unitMeasureSelect.className = 'form-control';
+// unitMeasureSelect.name = 'unidadeMedida';
+// unitMeasureSelect.addEventListener('change', (e) => {
+//     formularioInstance.handleProductsAndDocsChange(e, index); // Call handleProductsAndDocsChange method from Formulario instance
+// });
+// unitMeasureSelect.required = true;
+
+// // Create the "Selecione..." option
+// const defaultOption = document.createElement('option');
+// defaultOption.value = '';
+// defaultOption.textContent = 'Selecione...';
+// defaultOption.disabled = true;
+// defaultOption.selected = true; // Make it the default option
+
+// // Create other options
+// const options = ['Kg', 'g', 'L', 'mL'];
+// options.forEach(option => {
+//     const optionElement = document.createElement('option');
+//     optionElement.value = option.toLowerCase();
+//     optionElement.textContent = option;
+//     unitMeasureSelect.appendChild(optionElement);
+// });
+
+// // Add the default option as the first child of the select element
+// unitMeasureSelect.insertBefore(defaultOption, unitMeasureSelect.firstChild);
+// const unitMeasureSelect = document.createElement('select');
+// unitMeasureSelect.className = 'form-control';
+// unitMeasureSelect.name = 'unidadeMedida';
+// unitMeasureSelect.addEventListener('change', (e) => {
+//     formularioInstance.handleProductsAndDocsChange(e, index); // Call handleProductsAndDocsChange method from Formulario instance
+// });
+// unitMeasureSelect.required = true;
+
+// // Create the placeholder option
+// const placeholderOption = document.createElement('option');
+// placeholderOption.value = '';
+// placeholderOption.textContent = 'Selecione uma unidade...';
+// placeholderOption.disabled = true;
+// placeholderOption.selected = true; // Make it the default option
+
+// // Create other options
+// const options = ['Kg', 'g', 'L', 'mL'];
+// options.forEach(option => {
+//     const optionElement = document.createElement('option');
+//     optionElement.value = option.toLowerCase();
+//     optionElement.textContent = option;
+//     if (option.toLowerCase() === Formulario.formData.produtos[index].unidadeMedida) {
+//         optionElement.selected = true; // Set selected attribute if it matches the stored value
+//     }
+//     unitMeasureSelect.appendChild(optionElement);
+// });
+
+// // Add the placeholder option as the first child of the select element
+// unitMeasureSelect.insertBefore(placeholderOption, unitMeasureSelect.firstChild);
+
+// unitMeasureColumn.appendChild(unitMeasureSelect);
+
 const unitMeasureSelect = document.createElement('select');
 unitMeasureSelect.className = 'form-control';
 unitMeasureSelect.name = 'unidadeMedida';
 unitMeasureSelect.addEventListener('change', (e) => {
-    formularioInstance.handleProductsAndDocsChange(e, index); // Call handleProductsAndDocsChange method from Formulario instance
+    const selectedOption = e.target.value;
+    formularioInstance.formData.produtos[index].unidadeMedida = selectedOption; // Update formData
 });
-unitMeasureSelect.required = true;
 
-// Create the "Selecione..." option
-const defaultOption = document.createElement('option');
-defaultOption.value = '';
-defaultOption.textContent = 'Selecione...';
-defaultOption.disabled = true;
-defaultOption.selected = true; // Make it the default option
-
-// Create other options
-const options = ['Kg', 'g', 'L', 'mL'];
-options.forEach(option => {
+// Create options for unit measurements
+const unitMeasurements = ['Selecione...', 'Kg', 'g', 'L', 'mL'];
+// unitMeasurements.forEach(unit => {
+//     const optionElement = document.createElement('option');
+//     optionElement.value = unit.toLowerCase();
+//     optionElement.textContent = unit;
+//     if (unit.toLowerCase() === Formulario.formData.produtos[index].unidadeMedida) {
+//         optionElement.selected = true; // Set selected attribute if it matches the stored value
+//     }
+unitMeasurements.forEach((unit, i) => {
     const optionElement = document.createElement('option');
-    optionElement.value = option.toLowerCase();
-    optionElement.textContent = option;
+    optionElement.value = unit.toLowerCase();
+    optionElement.textContent = unit;
+    if (i === 0) {
+        optionElement.disabled = true; // Disable the first option ("Selecione...")
+        optionElement.selected = true; // Set selected attribute for the default option
+    } else if (unit.toLowerCase() === Formulario.formData.produtos[index].unidadeMedida) {
+        optionElement.selected = true; // Set selected attribute if it matches the stored value
+    }
     unitMeasureSelect.appendChild(optionElement);
 });
 
-// Add the default option as the first child of the select element
-unitMeasureSelect.insertBefore(defaultOption, unitMeasureSelect.firstChild);
-
+// Append the select element to the container
 unitMeasureColumn.appendChild(unitMeasureLabel);
 unitMeasureColumn.appendChild(unitMeasureSelect);
 
@@ -125,9 +189,10 @@ unitMeasureColumn.appendChild(unitMeasureSelect);
     unitValueInput.className = 'form-control';
     unitValueInput.name = 'valorUnitario';
     unitValueInput.type = "number"
-    unitValueInput.value = product.quantidadeEstoque;
-    unitValueInput.addEventListener('change', (e) => {
+    unitValueInput.value = product.valorUnitario;
+    unitValueInput.addEventListener('input', (e) => {
         formularioInstance.handleProductsAndDocsChange(e, index); // Call handleProductsAndDocsChange method from Formulario instance
+        renderProdutosTable()
     });
     unitValueColumn.appendChild(unitValueLabel);
     unitValueColumn.appendChild(unitValueInput);
@@ -173,17 +238,7 @@ unitMeasureColumn.appendChild(unitMeasureSelect);
 }
 
 function handleAddProductAndUpdateTable() {
-        // Get the values from input fields
-        const unitMeasureSelect = document.querySelector('[name="unidadeMedida"]');
-    const selectedOption = unitMeasureSelect.value;
-    
-    // Check if the selected option is the placeholder "Selecione..."
-    if (selectedOption === '') {
-        alert('Por favor, selecione uma opção válida para a unidade de medida.');
-        return; // Exit the function without adding the product
-    }
-    
-        // Call the handleAddProduct method with the gathered values
+       
         formularioInstance.handleAddProduct();
     
         // Re-render the produtos table
@@ -249,13 +304,3 @@ formContainer.appendChild(produtosContainer); // Append it to the form container
 // Call the renderProdutosTable function and append the generated table to the produtos container
 renderProdutosTable();
 
-// Get the container element in your HTML where you want to append the form
-// const container = document.getElementById('form-container');
-
-// Call the renderProdutosTable function and append the generated table to the container
-// container.appendChild(renderProdutosTable());
-// Get the container element in your HTML where you want to append the form
-// const container = document.getElementById('form-container');
-
-// Call the FornecedorForm function and append the generated form to the container
-// container.appendChild(createProductRow());

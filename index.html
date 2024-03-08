@@ -22,7 +22,7 @@
 
     </form> -->
     <div class="container">
-        <form action="submit">
+        <form id="myForm">
         <div id="form-container">
             <!-- Form will be rendered here -->
 
@@ -41,6 +41,23 @@
         <script type="module" src="./components/FornecedorForm.js"></script>
         <script src="./components/ProdutosForm.js" type="module"></script>
         <script src="./components/DocumentosForm.js" type="module"></script>
+        <script src="./scripts/Formulario.js" type="module"></script>
+
+        <script type="module">
+            import shared from './scripts/Formulario.js';
+        
+            document.addEventListener('DOMContentLoaded', () => {
+                const form = document.getElementById('myForm');
+        
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault(); // Prevent the default form submission behavior
+                    
+                    shared.handleSubmit(event); // Call the handleSubmit method defined in your Formulario class
+                });
+            });
+        </script>
+        
+
 
         
     </body>

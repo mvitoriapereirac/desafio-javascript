@@ -7,14 +7,6 @@ function createDocumentRow(documento, index) {
     const tr = document.createElement('tr');
     tr.className = 'container-mt5';
 
-    const tdNome = document.createElement('td');
-    const inputNome = document.createElement('input');
-    inputNome.type = 'text';
-    inputNome.className = 'form-control';
-    inputNome.name = 'nome';
-    inputNome.value = documento.nome;
-    inputNome.addEventListener('input', (e) => formularioInstance.handleProductsAndDocsChange(e, index, 'documentos'));
-    tdNome.appendChild(inputNome);
 
     const tdArquivo = document.createElement('td');
     tdArquivo.className = "custom-file";
@@ -23,6 +15,7 @@ function createDocumentRow(documento, index) {
     inputFile.className = 'form-control';
     inputFile.addEventListener('change', (e) => formularioInstance.handleUploadDocument(e, index));
     tdArquivo.appendChild(inputFile);
+    inputFile.required = true 
 
     const tdDeleteButton = document.createElement('td');
     const deleteButton = document.createElement('button');
@@ -43,7 +36,7 @@ function createDocumentRow(documento, index) {
     viewButton.addEventListener('click', () => formularioInstance.handleViewDocument(index));
     tdViewButton.appendChild(viewButton);
 
-    tr.appendChild(tdNome);
+    // tr.appendChild(tdNome);
     tr.appendChild(tdArquivo);
     tr.appendChild(tdDeleteButton);
     tr.appendChild(tdViewButton);

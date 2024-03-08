@@ -73,24 +73,41 @@ class Formulario {
 
     
 
-    // Method to handle form submission
-    async handleSubmit(event) {
-        event.preventDefault();
-        // Display loading modal
-        this.loadingModal.classList.add('show');
+     handleSubmit = async (e) => {
+        e.preventDefault();
+        // setShowLoadingModal(true);
+        console.log(this.formData.produtos.length + '*******')
+
+        if (this.formData.produtos.length < 1 || this.formData.documentos.length < 1) {
+            alert('Por favor adicione pelo menos um produto e um documento.');
+            console.log(this.formDataformData.produtos.length)
+    
+            // console.log(formData.documentos.length)
+            return;
+        }
+        console.log(this.formData.produtos.length)
+    
+    
         try {
-            // Perform form submission logic (e.g., send data to server)
-            console.log('Form submitted:', this.formData);
-            // Simulate loading delay (remove this in production)
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            console.log('Form data saved successfully!');
+            const supplierDataJSON = JSON.stringify(this.formData);
+            console.log('Supplier Form Data JSON:', supplierDataJSON);
+    
+            const blob = new Blob([supplierDataJSON], { type: 'application/json' });
+    
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'supplierData.json';
+    
+            link.click();
+    
+            console.log('Form data downloaded successfully!');
         } catch (error) {
             console.error('Error submitting form:', error);
         } finally {
-            // Hide loading modal
-            this.loadingModal.classList.remove('show');
         }
-    }
+    
+    };
 
     // Method to handle adding a new product
     handleAddProduct() {
