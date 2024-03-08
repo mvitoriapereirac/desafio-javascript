@@ -178,8 +178,10 @@ class Formulario {
             const reader = new FileReader();
     
             reader.onload = () => {
-                const documentBlob = new Blob([reader.result], { type: file.type }); //Esse dado serve para permitir que o usuario visualize o documento e nao sua versao encriptada ao clicar em "ver"
-                const base64String = reader.result; //A FAZER: usar esse valor para popular o formData
+                const documentBlob = new Blob([reader.result], { type: file.type }); 
+                //Esse dado serve para permitir que o usuario visualize o documento e nao sua versao encriptada ao clicar em "ver"
+                
+                const base64String = reader.result; //A FAZER: usar esse valor para popular os arquivos dos documentos do formData
     
     
                 const documentData = {

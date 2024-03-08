@@ -1,65 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./styles/style.css" rel="stylesheet">
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Form</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link href="./styles/style.css" rel="stylesheet">
-
-    </head>
-    <body>
-        <!-- <form action="submit">
-
-        <div id="form-container" class="container"> -->
-            <!-- Form will be rendered here -->
-        <!-- </div>
-        <div>
-            <button type="submit" class="btn btn-primary col-md-12">Salvar Fornecedor</button>
-
-        </div>
-
-    </form> -->
+</head>
+<body>
     <div class="container">
         <form id="myForm">
-        <div id="form-container">
-            <!-- Form will be rendered here -->
-
-        </div>
-        <button type="submit" class="btn btn-primary col-md-12">Salvar Fornecedor</button>
-
+            <div id="form-container">
+                <!-- Form will be rendered here -->
+            </div>
+            <button type="submit" class="btn btn-primary col-md-12">Salvar Fornecedor</button>
         </form>
     </div>
-
-        <!-- Bootstrap JS and jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        
-        <!-- Your JavaScript files -->
-        <script type="module" src="./components/FornecedorForm.js"></script>
-        <script src="./components/ProdutosForm.js" type="module"></script>
-        <script src="./components/DocumentosForm.js" type="module"></script>
-        <script src="./scripts/Formulario.js" type="module"></script>
-
-        <script type="module">
-            import shared from './scripts/Formulario.js';
-        
-            document.addEventListener('DOMContentLoaded', () => {
-                const form = document.getElementById('myForm');
-        
-                form.addEventListener('submit', (event) => {
-                    event.preventDefault(); // Prevent the default form submission behavior
-                    
-                    shared.handleSubmit(event); // Call the handleSubmit method defined in your Formulario class
-                });
-            });
-        </script>
-        
-
-
-        
-    </body>
-    </html>
     
+    <!-- Loading modal -->
+    <div class="loading-modal" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Your JavaScript files -->
+    <script type="module" src="./components/FornecedorForm.js"></script>
+    <script src="./components/ProdutosForm.js" type="module"></script>
+    <script src="./components/DocumentosForm.js" type="module"></script>
+    <script src="./scripts/Formulario.js" type="module"></script>
+
+    <script type="module">
+        import shared from './scripts/Formulario.js';
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('myForm');
+            const loadingModal = document.querySelector('.loading-modal');
+    
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); 
+                
+                loadingModal.style.display = 'block';
+                
+                await shared.handleSubmit(event);
+                
+               
+            });
+        });
+    </script>
+</body>
+</html>
