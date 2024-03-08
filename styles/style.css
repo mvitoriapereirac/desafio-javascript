@@ -77,32 +77,17 @@ button[type="submit"] {
 
 
 
-/* .loading-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-  } */
-
   .loading-modal {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5); 
     color: white;
     padding: 20px;
-    width: 100%;
-    height: 100%;
     border-radius: 10px;
-    z-index: 1000; /* Ensure the modal appears above other elements */
+    z-index: 1000; 
 }
   
   .loading-spinner {

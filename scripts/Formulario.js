@@ -75,14 +75,16 @@ class Formulario {
 
      handleSubmit = async (e) => {
         e.preventDefault();
-        // setShowLoadingModal(true);
-        console.log(this.formData.produtos.length + '*******')
+        const form = $('#myForm');
+        if (!form.valid()) {
+            return;
+        }
 
+        
         if (this.formData.produtos.length < 1 || this.formData.documentos.length < 1) {
             alert('Por favor adicione pelo menos um produto e um documento.');
             console.log(this.formDataformData.produtos.length)
     
-            // console.log(formData.documentos.length)
             return;
         }
         console.log(this.formData.produtos.length)

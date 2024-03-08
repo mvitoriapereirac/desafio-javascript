@@ -6,6 +6,13 @@
     <title>Form</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="./styles/style.css" rel="stylesheet">
+    <style>
+        .error{
+            color: red;
+            font-style: italic;
+        }
+    </style>
+
 
 </head>
 <body>
@@ -28,12 +35,17 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+
     
     <!-- Your JavaScript files -->
     <script type="module" src="./components/FornecedorForm.js"></script>
     <script src="./components/ProdutosForm.js" type="module"></script>
     <script src="./components/DocumentosForm.js" type="module"></script>
     <script src="./scripts/Formulario.js" type="module"></script>
+    <script src="./scripts/Validator.js" type="module"></script>
+
 
     <script type="module">
         import shared from './scripts/Formulario.js';
@@ -45,10 +57,14 @@
             form.addEventListener('submit', async (event) => {
                 event.preventDefault(); 
                 
+                const form = $('#myForm');
+                if (!form.valid()) {
+                    return false;
+                }
                 loadingModal.style.display = 'block';
                 
                 await shared.handleSubmit(event);
-                
+                return false;
                
             });
         });
