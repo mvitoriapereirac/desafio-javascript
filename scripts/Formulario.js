@@ -8,7 +8,7 @@ class Formulario {
 
             // Initialize formData
             this.formData = {
-                razaoSocial: 'aaa',
+                razaoSocial: '',
                 nomeFantasia: '',
                 cnpj: '',
                 inscricaoEstadual: '',

@@ -207,63 +207,6 @@ function createAddProductButton() {
 }
 
 
-// function renderProdutosTable() {
-//     const div = document.createElement('div');
-    
-//     const h2 = document.createElement('h2');
-//     h2.textContent = 'Produtos';
-//     div.appendChild(h2);
-    
-//     const table = document.createElement('table');
-//     table.className = 'table';
-    
-//     const tbody = document.createElement('tbody');
-    
-//     formularioInstance.formData.produtos.forEach((produto, index) => {
-//         const row = createProductRow(produto, index, formularioInstance.handleDeleteProduct, formularioInstance.handleProductsAndDocsChange);
-//         tbody.appendChild(row);
-//     });
-    
-//     const addProductButton = createAddProductButton(formularioInstance.handleAddProduct);
-    
-//     tbody.appendChild(addProductButton);
-//     table.appendChild(tbody);
-//     div.appendChild(table);
-    
-//     return div;
-// }
-
-// function renderProdutosTable() {
-//     console.log(JSON.stringify(formularioInstance.formData.produtos))
-
-//     const div = document.createElement('div');
-    
-//     const h3 = document.createElement('h3');
-//     h3.textContent = 'Produtos';
-//     div.appendChild(h3);
-    
-//     const table = document.createElement('table');
-//     table.className = 'table';
-    
-//     const tbody = document.createElement('tbody');
-    
-//     formularioInstance.formData.produtos.forEach((produto, index) => {
-//         console.log(formularioInstance.formData.produtos)
-//         console.log(`Product ${index}:`, produto);
-
-//         const row = createProductRow(produto, index);
-//         tbody.appendChild(row);
-//     });
-    
-//     const addProductButton = createAddProductButton();
-    
-//     tbody.appendChild(addProductButton);
-//     table.appendChild(tbody);
-//     div.appendChild(table);
-    
-//     return div;
-// }
-
 function renderProdutosTable() {
     console.log(JSON.stringify(formularioInstance.formData.produtos))
 
