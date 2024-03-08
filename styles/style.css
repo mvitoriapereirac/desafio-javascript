@@ -1,12 +1,79 @@
 
-Copy code
-/* styles/style.css */
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #f4f4f4;
 }
 
-h1 {
-    color: #333;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+
+.formulario form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px; /* Adjust the margin-top value as needed */
+    margin-bottom: 20px;
+}
+
+.formulario form > * {
+    margin-bottom: 40px; 
+    
+}
+.label {
+    font-size: 6px; /* Adjust the font-size value as needed */
+
+
+}
+
+.container h3 {
+    background-color: rgba(57, 130, 173, 1);
+    color: white;
+    font-style: normal;
+   
+
+
+}
+
+#form-container {
+    margin-bottom: 10px; /* Adjust the value as needed */
+}
+
+#fornecedor-container {
+    margin-bottom: 20px; /* Adjust the value as needed */
+}
+#produtos-container {
+    margin-bottom: 20px; /* Adjust the value as needed */
+
+}
+button[type="submit"] {
+    margin-top: 10px; /* Adjust the value as needed */
+}
+
+
+.btn-primary {
+    background-color: rgba(70, 156, 48, 1);
+}
+
+.see {
+    background-color: blue;
+}
+
+
+

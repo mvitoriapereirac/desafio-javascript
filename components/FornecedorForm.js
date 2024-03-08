@@ -2,14 +2,11 @@ import Formulario from '../scripts/Formulario.js'
 
 
 function renderForm() {
-    // Clear previous form content
     const container = document.getElementById('fornecedor-container');
 
-    // Clear the existing content
     console.log("render form")
     container.innerHTML = '';
 
-    // Call the FornecedorForm function and append the generated form to the container
     fornecedorContainer.appendChild(FornecedorForm());
 }
 
@@ -24,8 +21,8 @@ function FornecedorForm() {
     formContainer.appendChild(formTitle);
 
     // Create form element
-    const form = document.createElement('form');
-    form.addEventListener('submit', handleSubmit); // Add submit event listener
+    // const form = document.createElement('form');
+    // form.addEventListener('submit', handleSubmit); // Add submit event listener
 
     // Fornecedor section
     const fornecedorSection = document.createElement('div');
@@ -195,7 +192,7 @@ const complementoDiv = document.createElement('div');
 complementoDiv.classList.add('mb-3');
 complementoDiv.appendChild(complementoLabel);
 complementoDiv.appendChild(complementoInput);
-form.appendChild(complementoDiv);
+formContainer.appendChild(complementoDiv);
 
 // Row 1
 const row1Div = document.createElement('div');
@@ -315,15 +312,15 @@ row2Div.appendChild(emailDiv);
 // formContainer.appendChild(form);
 
     // Append fornecedor section to form
-    form.appendChild(fornecedorSection);
-    form.appendChild(row1Div);
-    form.appendChild(complementoDiv);
-    form.appendChild(row2Div);
+    formContainer.appendChild(fornecedorSection);
+    formContainer.appendChild(row1Div);
+    formContainer.appendChild(complementoDiv);
+    formContainer.appendChild(row2Div);
 
     console.log("passei aqui!!!")
 
     // Append form to form container
-    formContainer.appendChild(form);
+    // formContainer.appendChild(form);
 
     // Return the form container
     return formContainer;

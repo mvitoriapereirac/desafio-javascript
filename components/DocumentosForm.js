@@ -5,9 +5,9 @@ function DocumentosTable() {
     const table = document.createElement('div');
     table.className = 'container-mt5';
 
-    const h2 = document.createElement('h2');
-    h2.textContent = 'Anexos';
-    table.appendChild(h2);
+    const h3 = document.createElement('h3');
+    h3.textContent = 'Anexos';
+    table.appendChild(h3);
 
     const tableElement = document.createElement('table');
     tableElement.className = 'table';
@@ -34,6 +34,7 @@ function DocumentosTable() {
         tdNome.appendChild(inputNome);
 
         const tdArquivo = document.createElement('td');
+        tdArquivo.className = "custom-file"
         const inputFile = document.createElement('input');
         inputFile.type = 'file';
         inputFile.className = 'form-control';

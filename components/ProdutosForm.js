@@ -207,6 +207,7 @@ function createAddProductButton() {
 }
 
 
+
 function renderProdutosTable() {
     console.log(JSON.stringify(formularioInstance.formData.produtos))
 
