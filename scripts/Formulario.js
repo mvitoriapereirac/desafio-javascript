@@ -170,12 +170,14 @@ class Formulario {
                     arquivo: documentBlob, 
                 };
     
-                const newDocumentos = [...formData.documentos];
+                const newDocumentos = [...this.formData.documentos];
                 newDocumentos[index] = documentData;
     
                 sessionStorage.setItem(`documentData_${index}`, JSON.stringify(documentData));
+
+                this.formData.documentos = newDocumentos
+                console.log(this.formData.documentos)
     
-                setFormData({ ...formData, documentos: newDocumentos });
             };
     
             reader.readAsArrayBuffer(file); 
@@ -185,17 +187,18 @@ class Formulario {
     };
 
     handleDeleteDocument = (index) => {
-        const newDocumentos = [...formData.documentos];
+        const newDocumentos = [...this.formData.documentos];
         newDocumentos.splice(index, 1);
     
         sessionStorage.removeItem(`documentBlob_${index}`);
         sessionStorage.removeItem(`documentMetadata_${index}`);
+
+        this.formData.documentos = newDocumentos
     
-        setFormData({ ...formData, documentos: newDocumentos });
       };
     
     handleViewDocument = (index) => {
-        const documento = formData.documentos[index];
+        const documento = this.formData.documentos[index];
         const file = documento.arquivo;
     
         if (file) {
@@ -215,8 +218,8 @@ class Formulario {
         }
     };
 
-    handleAddDocumento = () => {
-        formData.documentos.push({ nome: '', arquivo: '' });
+    handleAddDocument = () => {
+        this.formData.documentos.push({ nome: '', arquivo: '' });
 
       };
 

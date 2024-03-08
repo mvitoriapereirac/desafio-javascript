@@ -1,86 +1,105 @@
-import Formulario from '../scripts/Formulario.js'
 
+import Formulario from '../scripts/Formulario.js';
 
-function DocumentosTable() {
-    const table = document.createElement('div');
-    table.className = 'container-mt5';
+const formularioInstance = Formulario;
 
+function createDocumentRow(documento, index) {
+    const tr = document.createElement('tr');
+    tr.className = 'container-mt5';
+
+    const tdNome = document.createElement('td');
+    const inputNome = document.createElement('input');
+    inputNome.type = 'text';
+    inputNome.className = 'form-control';
+    inputNome.name = 'nome';
+    inputNome.value = documento.nome;
+    inputNome.addEventListener('input', (e) => formularioInstance.handleProductsAndDocsChange(e, index, 'documentos'));
+    tdNome.appendChild(inputNome);
+
+    const tdArquivo = document.createElement('td');
+    tdArquivo.className = "custom-file";
+    const inputFile = document.createElement('input');
+    inputFile.type = 'file';
+    inputFile.className = 'form-control';
+    inputFile.addEventListener('change', (e) => formularioInstance.handleUploadDocument(e, index));
+    tdArquivo.appendChild(inputFile);
+
+    const tdDeleteButton = document.createElement('td');
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
+    deleteButton.className = 'btn btn-danger';
+    deleteButton.textContent = 'Excluir';
+    deleteButton.addEventListener('click', () => {
+        formularioInstance.handleDeleteDocument(index); // Call handleDeleteDocument method from Formulario instance
+        renderDocumentosTable(); // Re-render the entire documentos table
+    });
+    tdDeleteButton.appendChild(deleteButton);
+
+    const tdViewButton = document.createElement('td');
+    const viewButton = document.createElement('button');
+    viewButton.type = 'button';
+    viewButton.className = 'btn btn-primary see';
+    viewButton.textContent = 'Ver';
+    viewButton.addEventListener('click', () => formularioInstance.handleViewDocument(index));
+    tdViewButton.appendChild(viewButton);
+
+    tr.appendChild(tdNome);
+    tr.appendChild(tdArquivo);
+    tr.appendChild(tdDeleteButton);
+    tr.appendChild(tdViewButton);
+
+    return tr;
+}
+
+function handleAddDocumentoAndUpdateTable() {
+    formularioInstance.handleAddDocument();
+    renderDocumentosTable();
+}
+
+function createAddDocumentoButton() {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn-primary col-md-12';
+    button.textContent = 'Adicionar outro anexo';
+    button.addEventListener('click', handleAddDocumentoAndUpdateTable);
+    return button;
+}
+
+function renderDocumentosTable() {
+    // Get the existing container
+    const container = document.getElementById('documentos-container');
+
+    // Clear the existing content
+    container.innerHTML = '';
+
+    // Create new elements
     const h3 = document.createElement('h3');
     h3.textContent = 'Anexos';
-    table.appendChild(h3);
+    container.appendChild(h3);
 
-    const tableElement = document.createElement('table');
-    tableElement.className = 'table';
-    const thead = document.createElement('thead');
+    const table = document.createElement('table');
+    table.className = 'table';
+
     const tbody = document.createElement('tbody');
 
-    const thNome = document.createElement('th');
-    thNome.textContent = 'Nome';
-    const thArquivo = document.createElement('th');
-    thArquivo.textContent = 'Arquivo';
-
-    thead.appendChild(thNome);
-    thead.appendChild(thArquivo);
-
-    Formulario.formData.documentos.forEach((documento, index) => {
-        const tr = document.createElement('tr');
-        const tdNome = document.createElement('td');
-        const inputNome = document.createElement('input');
-        inputNome.type = 'text';
-        inputNome.className = 'form-control';
-        inputNome.name = 'nome';
-        inputNome.value = documento.nome;
-        inputNome.addEventListener('input', (e) => Formulario.handleProductsAndDocsChange(e, index, 'documentos'));
-        tdNome.appendChild(inputNome);
-
-        const tdArquivo = document.createElement('td');
-        tdArquivo.className = "custom-file"
-        const inputFile = document.createElement('input');
-        inputFile.type = 'file';
-        inputFile.className = 'form-control';
-        inputFile.addEventListener('change', (e) => Formulario.handleUploadDocument(e, index));
-        tdArquivo.appendChild(inputFile);
-
-        const tdDeleteButton = document.createElement('td');
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.className = 'btn btn-danger';
-        deleteButton.textContent = 'Excluir';
-        deleteButton.addEventListener('click', () => Formulario.handleDeleteDocument(index));
-        tdDeleteButton.appendChild(deleteButton);
-
-        const tdViewButton = document.createElement('td');
-        const viewButton = document.createElement('button');
-        viewButton.type = 'button';
-        viewButton.className = 'btn btn-primary see';
-        viewButton.textContent = 'Ver';
-        viewButton.addEventListener('click', () => Formulario.handleViewDocument(index));
-        tdViewButton.appendChild(viewButton);
-
-        tr.appendChild(tdNome);
-        tr.appendChild(tdArquivo);
-        tr.appendChild(tdDeleteButton);
-        tr.appendChild(tdViewButton);
-
-        tbody.appendChild(tr);
+    formularioInstance.formData.documentos.forEach((documento, index) => {
+        const row = createDocumentRow(documento, index);
+        tbody.appendChild(row);
     });
 
-    tableElement.appendChild(thead);
-    tableElement.appendChild(tbody);
+    const addDocumentoButton = createAddDocumentoButton();
+    tbody.appendChild(addDocumentoButton);
 
-    const addButton = document.createElement('button');
-    addButton.type = 'button';
-    addButton.className = 'btn btn-primary col-md-12';
-    addButton.textContent = 'Adicionar outro anexo';
-    addButton.addEventListener('click', Formulario.handleAddDocumento);
-
-    table.appendChild(tableElement);
-    table.appendChild(addButton);
-
-    return table;
+    table.appendChild(tbody);
+    container.appendChild(table);
 }
 
 const formContainer = document.getElementById('form-container');
-formContainer.appendChild(DocumentosTable())
 
-export default DocumentosTable;
+const documentosContainer = document.createElement('div');
+documentosContainer.id = 'documentos-container';
+formContainer.appendChild(documentosContainer); // Append it to the form container
+
+renderDocumentosTable();
+
+export default renderDocumentosTable;

@@ -102,7 +102,7 @@ unitMeasureColumn.appendChild(unitMeasureSelect);
     const stockAmountLabel = document.createElement('label');
     stockAmountLabel.htmlFor = 'quantidade';
     stockAmountLabel.className = 'form-label';
-    stockAmountLabel.textContent = 'QTDE. em Estoque';
+    stockAmountLabel.textContent = 'Qtde. em Estoque';
     const stockAmountInput = document.createElement('input');
     stockAmountInput.className = 'form-control';
     stockAmountInput.name = 'quantidadeEstoque';
@@ -174,11 +174,6 @@ unitMeasureColumn.appendChild(unitMeasureSelect);
 
 function handleAddProductAndUpdateTable() {
         // Get the values from input fields
-        const descricao = document.querySelector('input[name="descricao"]').value;
-        const unidadeMedida = document.querySelector('select[name="unidadeMedida"]').value;
-        const quantidadeEstoque = document.querySelector('input[name="quantidadeEstoque"]').value;
-        const valorUnitario = document.querySelector('input[name="valorUnitario"]').value;
-        const valorTotal = document.querySelector('input[name="valorTotal"]').value;
         const unitMeasureSelect = document.querySelector('[name="unidadeMedida"]');
     const selectedOption = unitMeasureSelect.value;
     
@@ -189,7 +184,7 @@ function handleAddProductAndUpdateTable() {
     }
     
         // Call the handleAddProduct method with the gathered values
-        formularioInstance.handleAddProduct(descricao, unidadeMedida, quantidadeEstoque, valorUnitario, valorTotal);
+        formularioInstance.handleAddProduct();
     
         // Re-render the produtos table
         renderProdutosTable();
