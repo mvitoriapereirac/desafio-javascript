@@ -137,7 +137,7 @@ class Formulario {
         }
     }
 
-     handleCEP = async (CEP) => {
+    handleCEP = async (CEP) => {
          console.log("entrou no CEP "+ $(CEP) )
         try {
              const response = await fetch(`https://viacep.com.br/ws/${CEP}/json/`);
@@ -152,6 +152,73 @@ class Formulario {
              throw error;
          }
     };
+
+    handleUploadDocument = (e, index) => {
+        const { files } = e.target;
+        
+        if (files.length > 0) {
+            const file = files[0];
+            const reader = new FileReader();
+    
+            reader.onload = () => {
+                const documentBlob = new Blob([reader.result], { type: file.type }); //Esse dado serve para permitir que o usuario visualize o documento e nao sua versao encriptada ao clicar em "ver"
+                const base64String = reader.result; //A FAZER: usar esse valor para popular o formData
+    
+    
+                const documentData = {
+                    nome: file.name,
+                    arquivo: documentBlob, 
+                };
+    
+                const newDocumentos = [...formData.documentos];
+                newDocumentos[index] = documentData;
+    
+                sessionStorage.setItem(`documentData_${index}`, JSON.stringify(documentData));
+    
+                setFormData({ ...formData, documentos: newDocumentos });
+            };
+    
+            reader.readAsArrayBuffer(file); 
+        } else {
+            console.error('No file selected.');
+        }
+    };
+
+    handleDeleteDocument = (index) => {
+        const newDocumentos = [...formData.documentos];
+        newDocumentos.splice(index, 1);
+    
+        sessionStorage.removeItem(`documentBlob_${index}`);
+        sessionStorage.removeItem(`documentMetadata_${index}`);
+    
+        setFormData({ ...formData, documentos: newDocumentos });
+      };
+    
+    handleViewDocument = (index) => {
+        const documento = formData.documentos[index];
+        const file = documento.arquivo;
+    
+        if (file) {
+            const blob = new Blob([file], { type: file.type });
+    
+            const url = URL.createObjectURL(blob);
+    
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = file.name;
+    
+            link.click();
+    
+            URL.revokeObjectURL(url);
+        } else {
+            console.error('File not found.');
+        }
+    };
+
+    handleAddDocumento = () => {
+        formData.documentos.push({ nome: '', arquivo: '' });
+
+      };
 
 }
 const shared = new Formulario();
